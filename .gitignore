@@ -1,0 +1,6 @@
+# ignore downloaded fonts
+src/*.ttf
+src/*.eot
+src/*.otf
+src/*.woff
+src/*.woff2

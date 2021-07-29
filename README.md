@@ -1,0 +1,67 @@
+# Material Design Icon Fonts Self-Hosted
+
+This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
+
+This repo fetches icon fonts from the original repo, converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+
+## Material design icons
+
+Material design icons are the official [icon set](http://www.google.com/design/spec/style/icons.html#icons-system-icons) from Google that are designed under the [material design guidelines](http://www.google.com/design/spec).
+
+## Developer guide
+
+Read the [developer guide](http://google.github.io/material-design-icons/) on how to use the material design icons in your project.
+
+### Using a font collection (recommended way as per Google)
+
+The `iconfont` folder contains pre-generated font files that can be included in a project. This is especially convenient for the web; however, it is generally better to link to the web font hosted on Google Fonts:
+
+```html
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+```
+
+### Using self-hosted version
+
+#### Angular
+
+Add to the `styles` array of a corresponding app in `angular.json`
+
+##### Regular
+
+```json
+"styles": [
+  "node_modules/material-design-icon-fonts/iconfont/material-icons.css"
+],
+```
+
+##### Outlined
+
+```json
+"styles": [
+  "node_modules/material-design-icon-fonts/iconfont/material-icons-outlined.css"
+],
+```
+
+##### Round
+
+```json
+"styles": [
+  "node_modules/material-design-icon-fonts/iconfont/material-icons-round.css"
+],
+```
+
+##### Sharp
+
+```json
+"styles": [
+  "node_modules/material-design-icon-fonts/iconfont/material-icons-sharp.css"
+],
+```
+
+##### TwoTone
+
+```json
+"styles": [
+  "node_modules/material-design-icon-fonts/iconfont/material-icons-twotone.css"
+],
+```

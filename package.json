@@ -1,0 +1,27 @@
+{
+  "name": "material-design-icon-fonts-self-hosted",
+  "version": "4.0.0",
+  "description": "Material Design icon fonts (only!) by Google",
+  "keywords": [
+    "icons",
+    "iconfont",
+    "font",
+    "material",
+    "material-design",
+    "google"
+  ],
+  "homepage": "https://github.com/google/material-design-icons-self-hosted",
+  "bugs": {
+    "url": "https://github.com/google/material-design-icons-self-hosted/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rfprod/material-design-icon-fonts-self-hosted"
+  },
+  "license": "Apache-2.0",
+  "author": "rfprod <zoidenmacht@zoho.com>",
+  "main": "index.js",
+  "scripts": {
+    "generate": "bash ./src/generate-iconfont.sh"
+  }
+}
