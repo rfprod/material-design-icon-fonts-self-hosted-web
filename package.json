@@ -22,6 +22,8 @@
   "author": "rfprod <zoidenmacht@zoho.com>",
   "main": "index.js",
   "scripts": {
-    "generate": "bash ./src/generate-iconfont.sh"
+    "generate": "bash ./src/generate-iconfont.sh",
+    "install": "sudo apt install shellcheck",
+    "lint": "shellcheck ./src/*.sh"
   }
 }
