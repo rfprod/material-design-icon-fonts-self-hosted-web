@@ -36,7 +36,7 @@ jobs:
           sudo apt install secure-delete
 
       - name: Generate
-        run: yarn generate
+        run: yarn install
 
       - name: Publish Package to npmjs.org
         run: |
