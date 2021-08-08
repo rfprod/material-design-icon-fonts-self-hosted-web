@@ -42,7 +42,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons.css"
+  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons.css"
 ],
 ```
 
@@ -50,7 +50,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-outlined.css"
+  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-outlined.css"
 ],
 ```
 
@@ -58,7 +58,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-round.css"
+  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-round.css"
 ],
 ```
 
@@ -66,7 +66,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-sharp.css"
+  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-sharp.css"
 ],
 ```
 
@@ -74,6 +74,6 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-twotone.css"
+  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-twotone.css"
 ],
 ```
