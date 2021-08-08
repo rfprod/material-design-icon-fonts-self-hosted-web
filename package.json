@@ -1,6 +1,6 @@
 {
   "name": "material-design-icon-fonts-self-hosted-web",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Self-hosted version generator of Google Material Design icon fonts for web apps.",
   "keywords": [
     "icons",
@@ -22,7 +22,7 @@
   "author": "rfprod <zoidenmacht@zoho.com>",
   "main": "index.js",
   "scripts": {
-    "generate": "bash ./src/generate-iconfont.sh",
+    "install": "bash ./src/generate-iconfont.sh",
     "lint": "shellcheck ./src/*.sh"
   }
 }
