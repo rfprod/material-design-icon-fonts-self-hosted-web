@@ -32,8 +32,8 @@ jobs:
 
       - name: Install secure-delete
         run: |
-          apt update
-          apt install secure-delete
+          sudo apt update
+          sudo apt install secure-delete
 
       - name: Generate
         run: yarn generate
