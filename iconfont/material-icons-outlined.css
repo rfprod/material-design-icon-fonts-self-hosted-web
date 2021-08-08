@@ -2,10 +2,10 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(iconfont/MaterialIconsOutlined-Regular.woff2) format('woff2');
+  src: url(MaterialIconsOutlined-Regular.woff2) format('woff2');
   src: local('Material Icons'),
        local('MaterialIconsOutlined-Regular'),
-       url(iconfont/MaterialIconsOutlined-Regular.ttf) format('truetype');
+       url(MaterialIconsOutlined-Regular.ttf) format('truetype');
 }
 
 .material-icons {

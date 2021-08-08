@@ -1,7 +1,7 @@
 {
   "name": "material-design-icon-fonts-self-hosted",
   "version": "4.0.0",
-  "description": "Material Design icon fonts (only!) by Google",
+  "description": "Self-hosted version generator of Google Material Design icon fonts (only!).",
   "keywords": [
     "icons",
     "iconfont",

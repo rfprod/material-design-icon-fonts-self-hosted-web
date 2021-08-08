@@ -1,8 +1,20 @@
-# Material Design Icon Fonts Self-Hosted
+# Self-hosted version generator of Google Material Design icon fonts (only!)
 
 This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
 
-This repo fetches icon fonts from the original repo, converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+This is a generator script which fetches icon fonts from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+
+Fonts can be generated locally if this repo is cloned.
+
+## Local script usage
+
+Clone the repo, `cd` into the project directory and execute from root
+
+```bash
+$ bash src/generate-iconfont.sh
+```
+
+Fonts will be generated in the `./iconfont` directory relative to the project root.
 
 ## Material design icons
 
