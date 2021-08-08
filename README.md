@@ -1,4 +1,4 @@
-# Self-hosted version generator of Google Material Design icon fonts (only!)
+# Self-hosted version generator of Google Material Design icon fonts for web apps
 
 This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
 
@@ -34,6 +34,16 @@ The `iconfont` folder contains pre-generated font files that can be included in 
 
 ### Using self-hosted version
 
+Install package.
+
+```bash
+npm i save-dev material-design-icon-fonts-web-self-hosted
+```
+
+```bash
+yarn add -D material-design-icon-fonts-web-self-hosted
+```
+
 #### Angular
 
 Add to the `styles` array of a corresponding app in `angular.json`
@@ -42,7 +52,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons.css"
+  "node_modules/material-design-icon-fonts-web-self-hosted/iconfont/material-icons.css"
 ],
 ```
 
@@ -50,7 +60,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-outlined.css"
+  "node_modules/material-design-icon-fonts-web-self-hosted/iconfont/material-icons-outlined.css"
 ],
 ```
 
@@ -58,7 +68,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-round.css"
+  "node_modules/material-design-icon-fonts-web-self-hosted/iconfont/material-icons-round.css"
 ],
 ```
 
@@ -66,7 +76,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-sharp.css"
+  "node_modules/material-design-icon-fonts-web-self-hosted/iconfont/material-icons-sharp.css"
 ],
 ```
 
@@ -74,6 +84,6 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts-self-hosted/iconfont/material-icons-twotone.css"
+  "node_modules/material-design-icon-fonts-web-self-hosted/iconfont/material-icons-twotone.css"
 ],
 ```

@@ -38,10 +38,18 @@ jobs:
       - name: Generate
         run: yarn generate
 
-      - name: Publish to NPM registry
+      - name: Publish Package to GitHub registry
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_REGISTRY_PUBLISH_TOKEN }}" > ~/.npmrc
+          npm publish
+          find ~/.npmrc -exec shred -fuz {} +
+        env:
+          GH_REGISTRY_PUBLISH_TOKEN: ${{ secrets.GH_REGISTRY_PUBLISH_TOKEN }}
+
+      - name: Publish Package to npmjs.org
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
           npm publish
           find ~/.npmrc -exec shred -fuz {} +
         env:
-          NPM_AUTOMATION_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN}}
+          NPM_AUTOMATION_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
