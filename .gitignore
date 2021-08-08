@@ -4,3 +4,11 @@ src/*.eot
 src/*.otf
 src/*.woff
 src/*.woff2
+# ignore generated fonts
+iconfont/*.ttf
+iconfont/*.eot
+iconfont/*.otf
+iconfont/*.woff
+iconfont/*.woff2
+# environment
+.env

@@ -1,8 +1,20 @@
-# Material Design Icon Fonts Self-Hosted
+# Self-hosted version generator of Google Material Design icon fonts for web apps
 
 This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
 
-This repo fetches icon fonts from the original repo, converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+This is a generator script which fetches icon fonts from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+
+Fonts can be generated locally if this repo is cloned.
+
+## Local script usage
+
+Clone the repo, `cd` into the project directory and execute from root
+
+```bash
+$ bash src/generate-iconfont.sh
+```
+
+Fonts will be generated in the `./iconfont` directory relative to the project root.
 
 ## Material design icons
 
@@ -22,6 +34,16 @@ The `iconfont` folder contains pre-generated font files that can be included in 
 
 ### Using self-hosted version
 
+Install package.
+
+```bash
+npm i save-dev material-design-icon-fonts-self-hosted-web
+```
+
+```bash
+yarn add -D material-design-icon-fonts-self-hosted-web
+```
+
 #### Angular
 
 Add to the `styles` array of a corresponding app in `angular.json`
@@ -30,7 +52,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons.css"
+  "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons.css"
 ],
 ```
 
@@ -38,7 +60,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-outlined.css"
+  "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons-outlined.css"
 ],
 ```
 
@@ -46,7 +68,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-round.css"
+  "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons-round.css"
 ],
 ```
 
@@ -54,7 +76,7 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-sharp.css"
+  "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons-sharp.css"
 ],
 ```
 
@@ -62,6 +84,6 @@ Add to the `styles` array of a corresponding app in `angular.json`
 
 ```json
 "styles": [
-  "node_modules/material-design-icon-fonts/iconfont/material-icons-twotone.css"
+  "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons-twotone.css"
 ],
 ```
