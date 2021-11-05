@@ -6,7 +6,7 @@
 
 Have you read the [code of conduct](CODE_OF_CONDUCT.md)?
 
-Check out the [existing issues](https://github.com/rfprod/material-design-icon-fonts-self-hosted-web/issues) and see what [types of contributions](#types-of-contributions) are accepted.
+Check out the [existing issues](https://github.com/rfprod/material-design-icon-fonts-self-hosted-web/issues) and see what types of contributions are accepted.
 
 ### Don't see your issue? Open one
 
