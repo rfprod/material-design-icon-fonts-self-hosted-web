@@ -1,7 +1,6 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Master
+name: trunk-on-push
 
 on:
   push:
@@ -25,6 +24,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -38,10 +40,10 @@ jobs:
       - name: Generate
         run: yarn install
 
-      - name: Publish Package to npmjs.org
+      - name: Publish the package (npmjs.org)
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
-          npm publish --access public
+          npm publish --access public || true
           find ~/.npmrc -exec shred -fuz {} +
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
