@@ -2,7 +2,7 @@
 
 This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
 
-This is a generator script which fetches icon fonts from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
+This is a generator script which fetches iconfont from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
 
 Fonts can be generated locally if this repo is cloned.
 
@@ -29,7 +29,10 @@ Read the [developer guide](http://google.github.io/material-design-icons/) on ho
 The `iconfont` folder contains pre-generated font files that can be included in a project. This is especially convenient for the web; however, it is generally better to link to the web font hosted on Google Fonts:
 
 ```html
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
 ```
 
 ### Using self-hosted version
@@ -37,7 +40,7 @@ The `iconfont` folder contains pre-generated font files that can be included in 
 Install package.
 
 ```bash
-npm i save-dev material-design-icon-fonts-self-hosted-web
+npm i --save-dev material-design-icon-fonts-self-hosted-web
 ```
 
 ```bash
