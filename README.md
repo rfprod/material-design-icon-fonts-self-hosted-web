@@ -2,9 +2,7 @@
 
 This is `NOT` a fork of the [material design icons](https://github.com/google/material-design-icons) by Google, including only the font files for smaller distribution.
 
-This is a generator script which fetches iconfont from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use self-hosted version of the latest material design icons for web.
-
-Fonts can be generated locally if this repo is cloned.
+This is a generator script which fetches the iconfont from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use the self-hosted version of the latest material design icons for web.
 
 ## Local script usage
 
@@ -24,9 +22,9 @@ Material design icons are the official [icon set](http://www.google.com/design/s
 
 Read the [developer guide](http://google.github.io/material-design-icons/) on how to use the material design icons in your project.
 
-### Using a font collection (recommended way as per Google)
+### Using the font collection (recommended way as per Google)
 
-The `iconfont` folder contains pre-generated font files that can be included in a project. This is especially convenient for the web; however, it is generally better to link to the web font hosted on Google Fonts:
+The `iconfont` folder contains pre-generated font files that can be included in a project. This is especially convenient for the web. However, it is generally better to link to the web font hosted on Google Fonts:
 
 ```html
 <link
@@ -35,13 +33,15 @@ The `iconfont` folder contains pre-generated font files that can be included in 
 />
 ```
 
-### Using self-hosted version
+### Using the self-hosted version
 
-Install package.
+Install the package. Exexute
 
 ```bash
 npm i --save-dev material-design-icon-fonts-self-hosted-web
 ```
+
+or
 
 ```bash
 yarn add -D material-design-icon-fonts-self-hosted-web
@@ -49,7 +49,7 @@ yarn add -D material-design-icon-fonts-self-hosted-web
 
 #### Angular
 
-Add to the `styles` array of a corresponding app in `angular.json`
+Add one of the folowing `css` files to the `styles` array of a corresponding app in `angular.json` depending on which version of the icons are intended to be used in the app.
 
 ##### Regular
 
