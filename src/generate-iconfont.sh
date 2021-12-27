@@ -34,10 +34,10 @@ MATERIAL_ICONS_TWOTONE_REGULAR_WOFF2_DIST="./iconfont/MaterialIconsTwoTone-Regul
 # - eot-utils (https://manpages.debian.org/stretch/eot-utils/)
 # - eot2ttf (https://packages.debian.org/stretch/fonts/eot2ttf)
 # - woff2 (https://packages.debian.org/buster/woff2)
+# - wget (https://www.gnu.org/software/wget/)
 ##
 installTools() {
-  sudo apt install woff2
-  sudo apt install eot-utils
+  sudo apt install woff2 eot-utils wget
 }
 
 ##
@@ -61,7 +61,7 @@ downloadSourceFonts() {
 
 ##
 # Converts source fonts to woff2.
-# Copies source source ttf fonts to
+# Copies source source ttf fonts to the ./iconfont directory.
 ##
 createFontsDist() {
   # regular
