@@ -4,6 +4,20 @@ This is `NOT` a fork of the [material design icons](https://github.com/google/ma
 
 This is a generator script which fetches the iconfont from the [original material design icons repo](https://github.com/google/material-design-icons), converts `otf` fonts to `woff`, and makes it possible to use the self-hosted version of the latest material design icons for web.
 
+## Requirements
+
+### Supported operating systems
+
+- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
+
+### Core dependencies
+
+- [Node.js](https://nodejs.org/)
+- [NPM](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/) - preferred package manager
+- [Git](https://git-scm.com/)
+- [Bash 5](https://www.gnu.org/software/bash/)
+
 ## Local script usage
 
 Clone the repo, `cd` into the project directory and execute from root
