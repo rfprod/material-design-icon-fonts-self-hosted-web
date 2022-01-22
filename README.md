@@ -14,7 +14,6 @@ This is a generator script which fetches the iconfont from the [original materia
 
 - [Node.js](https://nodejs.org/)
 - [NPM](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/) - preferred package manager
 - [Git](https://git-scm.com/)
 - [Bash 5](https://www.gnu.org/software/bash/)
 
