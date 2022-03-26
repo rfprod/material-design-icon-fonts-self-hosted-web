@@ -86,6 +86,13 @@ createFontsDist() {
   cp ./src/*.ttf ./iconfont
 }
 
-cleanupSourceAndDistFonts
-downloadSourceFonts
-createFontsDist
+##
+# Generates the iconfont.
+##
+generate() {
+  cleanupSourceAndDistFonts
+  downloadSourceFonts
+  createFontsDist
+}
+
+generate
