@@ -19,13 +19,21 @@ jobs:
         node-version: [16.x]
 
     steps:
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
       - name: Checkout sources
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Don't save Bash session history
-        run: unset HISTFILE
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            shelltools:
+              - 'src/*.sh'
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -33,15 +41,36 @@ jobs:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
-      - name: Install secure-delete
+      - name: Install jq
         run: |
           sudo apt update
-          sudo apt install secure-delete
+          sudo apt install -y jq
+
+      - name: Get variables (publish)
+        id: get-variables
+        run: |
+          PACKAGE_VERSION=$(jq --raw-output ".version" <./package.json)
+          PUBLISHED_PACKAGE_VERSION=$(curl -s https://registry.npmjs.com/material-design-icon-fonts-self-hosted-web/latest | jq --raw-output ".version")
+          SHOULD_PUBLISH='false'
+          if [ "${PACKAGE_VERSION}" != "${PUBLISHED_PACKAGE_VERSION}" ]; then SHOULD_PUBLISH='true'; fi
+          echo "::set-output name=publish::$(echo ${SHOULD_PUBLISH})"
+
+      - name: Lint shell
+        if: steps.changes.outputs.shelltools == 'true'
+        run: |
+          sudo apt install -y shellcheck
+          yarn lint
+
+      - name: Install secure-delete
+        if: steps.get-variables.outputs.publish == 'true'
+        run: sudo apt install -y secure-delete
 
       - name: Generate
+        if: steps.get-variables.outputs.publish == 'true'
         run: yarn install
 
       - name: Publish the package (npmjs.org)
+        if: steps.get-variables.outputs.publish == 'true'
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
           npm publish --access public || true
