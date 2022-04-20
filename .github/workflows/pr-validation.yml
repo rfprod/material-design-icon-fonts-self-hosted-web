@@ -19,11 +19,22 @@ jobs:
         node-version: [16.x]
 
     steps:
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
       - name: Checkout sources
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            shelltools:
+              - 'src/*.sh'
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -31,13 +42,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
-      - name: Install shellcheck
+      - name: Lint shell
+        if: steps.changes.outputs.shelltools == 'true'
         run: |
           sudo apt update
-          sudo apt install shellcheck
-
-      - name: Lint
-        run: yarn lint
+          sudo apt install -y shellcheck
+          yarn lint
 
       - name: Generate
         run: yarn install

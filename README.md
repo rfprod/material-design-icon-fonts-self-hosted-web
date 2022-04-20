@@ -13,7 +13,6 @@ This is a generator script which fetches the iconfont from the [original materia
 ### Core dependencies
 
 - [Node.js](https://nodejs.org/)
-- [NPM](https://nodejs.org/)
 - [Git](https://git-scm.com/)
 - [Bash 5](https://www.gnu.org/software/bash/)
 
