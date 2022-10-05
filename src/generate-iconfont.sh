@@ -30,6 +30,15 @@ MATERIAL_ICONS_TWOTONE_REGULAR_TTF_LOCAL_SRC="./src/MaterialIconsTwoTone-Regular
 MATERIAL_ICONS_TWOTONE_REGULAR_WOFF2_DIST="./iconfont/MaterialIconsTwoTone-Regular.woff2"
 
 ##
+# Checks if a deb package is installed.
+##
+checkIfDebPackageIsInstalled() {
+  local PACKAGE_EXISTS
+  PACKAGE_EXISTS=$(dpkg -s "$1")
+  echo "${PACKAGE_EXISTS}"
+}
+
+##
 # Installs packages:
 # - eot-utils (https://manpages.debian.org/stretch/eot-utils/)
 # - eot2ttf (https://packages.debian.org/stretch/fonts/eot2ttf)
@@ -37,7 +46,37 @@ MATERIAL_ICONS_TWOTONE_REGULAR_WOFF2_DIST="./iconfont/MaterialIconsTwoTone-Regul
 # - wget (https://www.gnu.org/software/wget/)
 ##
 installTools() {
-  sudo apt install woff2 eot-utils wget
+  # sudo apt install -y woff2 eot-utils wget
+
+  local WOFF2_EXISTS
+  WOFF2_EXISTS=$(checkIfDebPackageIsInstalled woff2)
+  if [ -z "${WOFF2_EXISTS}" ]; then
+    echo "woff2 is not installed. Installing the package..."
+
+    sudo apt install -y woff2
+  else
+    echo "woff2 is already installed."
+  fi
+
+  local EOT_UTILS_EXISTS
+  EOT_UTILS_EXISTS=$(checkIfDebPackageIsInstalled eot-utils)
+  if [ -z "${EOT_UTILS_EXISTS}" ]; then
+    echo "eot-utils is not installed. Installing the package..."
+
+    sudo apt install -y eot-utils
+  else
+    echo "eot-utils is already installed."
+  fi
+
+  local WGET_EXISTS
+  WGET_EXISTS=$(checkIfDebPackageIsInstalled wget)
+  if [ -z "${WGET_EXISTS}" ]; then
+    echo "wget is not installed. Installing the package..."
+
+    sudo apt install -y wget
+  else
+    echo "wget is already installed."
+  fi
 }
 
 ##
@@ -90,6 +129,7 @@ createFontsDist() {
 # Generates the iconfont.
 ##
 generate() {
+  installTools
   cleanupSourceAndDistFonts
   downloadSourceFonts
   createFontsDist
