@@ -1,5 +1,3 @@
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: trunk
 
 on:
@@ -15,60 +13,73 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-build-deploy:
+  execute:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+      id-token: write
 
     steps:
       - name: Don't save Bash session history
         run: unset HISTFILE
 
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Detect changes
-        uses: dorny/paths-filter@v2
-        id: changes
+      - name: Check source code change
+        id: src-change
+        uses: ./.github/actions/check-changes
         with:
-          filters: |
-            shelltools:
-              - 'src/*.sh'
+          pattern: "src/*.sh"
 
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: 16.x
+          node-version: 24.x
           check-latest: true
 
-      - name: Get variables (publish)
-        id: get-variables
+      - name: Variables
+        id: variables
         run: |
           PACKAGE_VERSION=$(jq --raw-output ".version" <./package.json)
-          PUBLISHED_PACKAGE_VERSION=$(curl -s https://registry.npmjs.com/material-design-icon-fonts-self-hosted-web/latest | jq --raw-output ".version")
+          PUBLISHED_PACKAGE_VERSION=$(curl -s "${PACKAGE_URL}" | jq --raw-output ".version")
           SHOULD_PUBLISH='false'
           if [ "${PACKAGE_VERSION}" != "${PUBLISHED_PACKAGE_VERSION}" ]; then SHOULD_PUBLISH='true'; fi
-          echo "::set-output name=publish::$(echo ${SHOULD_PUBLISH})"
+          echo "publish=$(echo ${SHOULD_PUBLISH})" >> $GITHUB_OUTPUT
+        env:
+          PACKAGE_URL: "https://registry.npmjs.com/material-design-icon-fonts-self-hosted-web/latest"
 
       - name: Lint shell
-        if: steps.changes.outputs.shelltools == 'true'
+        if: steps.src-change.outputs.change == 'true'
         run: |
           sudo apt install -y shellcheck
           yarn lint
 
-      - name: Install secure-delete
-        if: steps.get-variables.outputs.publish == 'true'
-        run: sudo apt install -y secure-delete
-
       - name: Generate
-        if: steps.get-variables.outputs.publish == 'true'
+        if: steps.variables.outputs.publish == 'true'
         run: yarn install
 
-      - name: Publish the package (npmjs.org)
-        if: steps.get-variables.outputs.publish == 'true'
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
-          npm publish --access public || true
-          find ~/.npmrc -exec shred -fuz {} +
+      - name: NPM Publish
+        if: steps.variables.outputs.publish == 'true'
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.head_ref }}
+          EVENT_TYPE: npm_publish
+        run: |
+          gh api \
+            -X POST \
+            /repos/${REPO}/dispatches \
+            --header 'Accept: application/vnd.github+json' \
+            --input - <<EOF
+          {
+            "event_type": "${EVENT_TYPE}",
+            "client_payload": {
+              "ref": "${BRANCH}"
+            }
+          }
+          EOF

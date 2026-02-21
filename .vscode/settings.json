@@ -15,13 +15,11 @@
   "shellcheck.enableQuickFix": false,
   "shellcheck.exclude": [],
   "shellcheck.executablePath": "shellcheck",
-  "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
   "shellcheck.ignorePatterns": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
   },
   "shellcheck.run": "onType",
-  "shellcheck.useWSL": false,
   "shellcheck.useWorkspaceRootAsCwd": true
 }
