@@ -1,0 +1,55 @@
+name: check-changes
+description: Check whether git diff displays changes matching a specific pattern.
+
+inputs:
+  pattern:
+    description: The pattern to match in git diff output.
+    required: true
+  premerge:
+    description: Set to true to compare with the trunk branch instead of previous commit.
+    required: false
+    default: "false"
+  trunk:
+    description: The branch to compare against when in premerge mode.
+    required: false
+    default: "main"
+
+outputs:
+  change:
+    description: Indicates whether changes matching the pattern were detected (true/false).
+    value: ${{ steps.check-changes.outputs.change }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check for changes matching the pattern
+      id: check-changes
+      shell: bash
+      run: |
+        echo "---" >> $GITHUB_STEP_SUMMARY
+        echo "### Checking changes using a pattern" >> $GITHUB_STEP_SUMMARY
+        echo "Pattern: ${PATTERN}" >> $GITHUB_STEP_SUMMARY
+
+        if [[ "$PREMERGE" == "true" ]]; then
+          # Fetch changes comparing current commit with origin/trunk
+          CHANGES=$(git diff origin/"${TRUNK}"...HEAD --name-only)
+        else
+          # Fetch changes comparing current commit with previous commit
+          CHANGES=$(git diff HEAD^ HEAD --name-only)
+        fi
+
+        # Check for matching changes
+        CHANGE=false
+        if [[ -n "$CHANGES" ]] && echo "$CHANGES" | grep -q -- "$PATTERN"; then
+          echo "Changes detected matching pattern: $PATTERN" >> $GITHUB_STEP_SUMMARY
+          CHANGE=true
+        else
+          echo "No changes detected matching pattern: $PATTERN" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "---" >> $GITHUB_STEP_SUMMARY
+
+        echo "change=$(echo ${CHANGE})" >> $GITHUB_OUTPUT
+      env:
+        PATTERN: ${{ inputs.pattern }}
+        PREMERGE: ${{ inputs.premerge }}
+        TRUNK: ${{ inputs.trunk }}
