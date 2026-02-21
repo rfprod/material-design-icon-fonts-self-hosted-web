@@ -1,5 +1,8 @@
 name: npm-publish
-description: Publish a package to NPM.
+description: >
+  Publish a package to NPM.
+  Prerequisites: Node.js and npm must be set up before calling this action
+  (e.g., using the actions/setup-node action).
 
 inputs:
   npm-automation-token:
@@ -18,6 +21,15 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Validate Node.js and npm availability
+      shell: bash
+      run: |
+        if ! command -v node &> /dev/null || ! command -v npm &> /dev/null; then
+          echo "::error::Node.js and npm must be set up before calling this action (e.g., using actions/setup-node)."
+          exit 1
+        fi
+        echo "Node.js $(node --version) and npm $(npm --version) are available."
+
     - name: Bail out on invalid inputs
       if: ${{ inputs.npm-automation-token == '' && inputs.use-trusted-publishing == 'false' }}
       shell: bash
