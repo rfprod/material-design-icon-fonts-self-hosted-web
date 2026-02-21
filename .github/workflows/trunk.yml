@@ -30,12 +30,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check source code change
-        id: src-change
-        uses: ./.github/actions/check-changes
-        with:
-          pattern: "src/*.sh"
-
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -54,7 +48,6 @@ jobs:
           PACKAGE_URL: "https://registry.npmjs.com/material-design-icon-fonts-self-hosted-web/latest"
 
       - name: Lint shell
-        if: steps.src-change.outputs.change == 'true'
         run: |
           sudo apt install -y shellcheck
           yarn lint

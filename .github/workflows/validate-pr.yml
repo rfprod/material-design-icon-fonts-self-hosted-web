@@ -31,13 +31,6 @@ jobs:
           git checkout -b premerge
           git fetch origin main:main
 
-      - name: Check source code change
-        id: src-change
-        uses: ./.github/actions/check-changes
-        with:
-          pattern: "src/*.sh"
-          premerge: true
-
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -45,7 +38,6 @@ jobs:
           check-latest: true
 
       - name: Lint shell
-        if: steps.src-change.outputs.change == 'true'
         run: |
           sudo apt update
           sudo apt install -y shellcheck
