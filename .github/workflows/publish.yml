@@ -1,0 +1,88 @@
+name: publish
+
+on:
+  repository_dispatch:
+    types: [npm_publish]
+  workflow_call:
+    inputs:
+      dry-run:
+        description: Used by premerge workflow to confirm the ability to publish packages without doing so.
+        type: string
+        required: false
+        default: "false"
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Run in dry-run mode"
+        required: false
+        default: "false"
+        type: string
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.event.client_payload.ref || github.ref_name || github.ref }}.${{ github.sha }}.publish
+  cancel-in-progress: true
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      dry-run: ${{ steps.variables.outputs.dry-run }}
+      ref: ${{ steps.variables.outputs.ref }}
+
+    steps:
+      - name: Variables
+        id: variables
+        env:
+          DRY_RUN: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.dry_run == true || github.event.client_payload.dry_run == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.dry-run == true || inputs.dry-run == 'true')) ||
+              (github.event_name == 'workflow_call' && (inputs.dry-run == true || inputs.dry-run == 'true')) ||
+              false
+            }}
+          REF: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && github.event.client_payload.ref) ||
+              (github.event_name == 'workflow_dispatch' && github.ref_name) ||
+              (github.event_name == 'workflow_call' && github.ref_name) ||
+              github.ref
+            }}
+        run: |
+          echo "dry-run=$(echo ${DRY_RUN})" >> $GITHUB_OUTPUT
+          echo "ref=$(echo ${REF})" >> $GITHUB_OUTPUT
+          echo "### :rocket: Publish Packages" >> $GITHUB_STEP_SUMMARY
+          echo "DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+          echo "REF: ${REF}" >> $GITHUB_STEP_SUMMARY
+
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          check-latest: true
+
+      - name: Generate
+        run: yarn install
+
+      - name: NPM publish
+        uses: ./.github/actions/npm-publish
+        with:
+          use-trusted-publishing: true
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}

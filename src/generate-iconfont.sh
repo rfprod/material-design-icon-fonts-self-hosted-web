@@ -32,7 +32,7 @@ MATERIAL_ICONS_TWOTONE_REGULAR_WOFF2_DIST="./iconfont/MaterialIconsTwoTone-Regul
 ##
 # Checks if a deb package is installed.
 ##
-checkIfDebPackageIsInstalled() {
+check_dpkg_package() {
   local PACKAGE_EXISTS
   PACKAGE_EXISTS=$(dpkg -s "$1")
   echo "${PACKAGE_EXISTS}"
@@ -45,11 +45,9 @@ checkIfDebPackageIsInstalled() {
 # - woff2 (https://packages.debian.org/buster/woff2)
 # - wget (https://www.gnu.org/software/wget/)
 ##
-installTools() {
-  # sudo apt install -y woff2 eot-utils wget
-
+install_tools() {
   local WOFF2_EXISTS
-  WOFF2_EXISTS=$(checkIfDebPackageIsInstalled woff2)
+  WOFF2_EXISTS=$(check_dpkg_package woff2)
   if [ -z "${WOFF2_EXISTS}" ]; then
     echo "woff2 is not installed. Installing the package..."
 
@@ -59,7 +57,7 @@ installTools() {
   fi
 
   local EOT_UTILS_EXISTS
-  EOT_UTILS_EXISTS=$(checkIfDebPackageIsInstalled eot-utils)
+  EOT_UTILS_EXISTS=$(check_dpkg_package eot-utils)
   if [ -z "${EOT_UTILS_EXISTS}" ]; then
     echo "eot-utils is not installed. Installing the package..."
 
@@ -68,8 +66,18 @@ installTools() {
     echo "eot-utils is already installed."
   fi
 
+  local EOT2TTF_EXISTS
+  EOT2TTF_EXISTS=$(check_dpkg_package eot2ttf)
+  if [ -z "${EOT2TTF_EXISTS}" ]; then
+    echo "eot2ttf is not installed. Installing eot2ttf..."
+
+    sudo apt install -y eot2ttf
+  else
+    echo "eot2ttf is already installed."
+  fi
+
   local WGET_EXISTS
-  WGET_EXISTS=$(checkIfDebPackageIsInstalled wget)
+  WGET_EXISTS=$(check_dpkg_package wget)
   if [ -z "${WGET_EXISTS}" ]; then
     echo "wget is not installed. Installing the package..."
 
@@ -82,7 +90,7 @@ installTools() {
 ##
 # Cleans up downloaded source fonts located in the src directory.
 ##
-cleanupSourceAndDistFonts() {
+cleanup_source_and_dist_fonts() {
   rm -rf ./src/*.ttf ./src/*.otf ./src/*.eot ./src/*.woff*
   rm -rf ./iconfont/*.ttf ./iconfont/*.otf ./iconfont/*.eot ./iconfont/*.woff*
 }
@@ -90,7 +98,7 @@ cleanupSourceAndDistFonts() {
 ##
 # Download source fonts from Google repo.
 ##
-downloadSourceFonts() {
+download_source_fonts() {
   wget -O "$MATERIAL_ICONS_REGULAR_TTF_LOCAL_SRC" "$MATERIAL_ICONS_REGULAR_TTF_REMOTE"
   wget -O "$MATERIAL_ICONS_OUTLINED_REGULAR_OTF_LOCAL_SRC" "$MATERIAL_ICONS_OUTLINED_REGULAR_OTF_REMOTE"
   wget -O "$MATERIAL_ICONS_ROUND_REGULAR_OTF_LOCAL_SRC" "$MATERIAL_ICONS_ROUND_REGULAR_OTF_REMOTE"
@@ -102,7 +110,7 @@ downloadSourceFonts() {
 # Converts source fonts to woff2.
 # Copies source source ttf fonts to the ./iconfont directory.
 ##
-createFontsDist() {
+generate_fonts_dist() {
   # regular
   woff2_compress ${MATERIAL_ICONS_REGULAR_TTF_LOCAL_SRC} >${MATERIAL_ICONS_REGULAR_WOFF2_DIST}
   # outlined regular
@@ -129,10 +137,10 @@ createFontsDist() {
 # Generates the iconfont.
 ##
 generate() {
-  installTools
-  cleanupSourceAndDistFonts
-  downloadSourceFonts
-  createFontsDist
+  install_tools
+  cleanup_source_and_dist_fonts
+  download_source_fonts
+  generate_fonts_dist
 }
 
 generate
